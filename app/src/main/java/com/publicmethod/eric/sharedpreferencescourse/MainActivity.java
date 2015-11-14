@@ -1,13 +1,14 @@
 package com.publicmethod.eric.sharedpreferencescourse;
 
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String PREFS_FILE = "com.publicmethod.eric.sharedpreferencescourse.preferences";
+    private static final String KEY_EDITTEXT = "key_edittext";
 
     private EditText mEditText;
 
@@ -24,6 +25,20 @@ public class MainActivity extends AppCompatActivity {
         mSharedPreferences = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
         mEditor = mSharedPreferences.edit();
 
+        String editText = mSharedPreferences.getString(KEY_EDITTEXT, "");
+        mEditText.setText(editText);
 
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        mEditor.putString(KEY_EDITTEXT, mEditText.getText().toString());
+        mEditor.apply();
+
+    }
+
+
+
 }
