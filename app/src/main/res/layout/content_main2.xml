@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,8 +9,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.publicmethod.eric.sharedpreferencescourse.MainActivity">
-
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.publicmethod.eric.sharedpreferencescourse.Main2Activity"
+    tools:showIn="@layout/activity_main2">
 
     <EditText
         android:id="@+id/editText"
@@ -20,4 +22,5 @@
         android:ems="10"
         android:inputType="textPersonName"
         tools:text="Name"/>
+
 </RelativeLayout>

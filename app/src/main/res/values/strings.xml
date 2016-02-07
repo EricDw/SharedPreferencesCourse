@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Shared Preferences Course</string>
+    <string name="app_name">SPC</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="reset_preferences">Reset Preferences</string>
 </resources>
