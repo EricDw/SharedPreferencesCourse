@@ -2,4 +2,6 @@
     <string name="app_name">SPC</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="reset_preferences">Reset Preferences</string>
+    <string name="button_text_minus">-</string>
+    <string name="button_text_add">+</string>
 </resources>

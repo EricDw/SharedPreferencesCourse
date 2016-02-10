@@ -1,4 +1,4 @@
-package com.publicmethod.eric.sharedpreferencescourse;
+package com.publicmethod.eric.sharedpreferencescourse.ui;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
+import com.publicmethod.eric.sharedpreferencescourse.R;
 
 public class Main2Activity extends AppCompatActivity {
 
