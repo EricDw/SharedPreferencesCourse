@@ -28,9 +28,7 @@ public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.Scor
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_layout_golf, parent, false);
 
-        ScoreViewHolder scoreViewHolder = new ScoreViewHolder(view);
-
-        return scoreViewHolder;
+        return new ScoreViewHolder(view);
     }
 
     @Override

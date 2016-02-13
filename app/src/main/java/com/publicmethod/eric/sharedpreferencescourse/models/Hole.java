@@ -19,10 +19,6 @@ public class Hole {
         return mHoleLabel;
     }
 
-    public void setHoleLabel(String holeLabel) {
-        mHoleLabel = holeLabel;
-    }
-
     public int getStrokeCount() {
         return mStrokeCount;
     }
