@@ -1,28 +1,34 @@
 package com.publicmethod.eric.sharedpreferencescourse.ui;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 
 import com.publicmethod.eric.sharedpreferencescourse.R;
+import com.publicmethod.eric.sharedpreferencescourse.adapters.ScoreCardAdapter;
+import com.publicmethod.eric.sharedpreferencescourse.models.Hole;
 
 public class Main2Activity extends AppCompatActivity {
 
     private static final String PREFS_FILE = "com.publicmethod.eric.sharedpreferencescourse.preferences";
-    private static final String KEY_EDITTEXT = "key_edittext";
+    private static final String KEY_STOKE_COUNT = "key_stroke_count";
 
-    private EditText mEditText;
 
-    private SharedPreferences mSharedPreferences;
-    private SharedPreferences.Editor mEditor;
+    private Hole[] mHoles = new Hole[18];
+
+    private RecyclerView mRecyclerView;
+    ScoreCardAdapter mScoreCardAdapter;
+
+    private static SharedPreferences mSharedPreferences;
+    private static SharedPreferences.Editor mEditor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,24 +37,43 @@ public class Main2Activity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        mEditText = (EditText) findViewById(R.id.editText);
-
-        mSharedPreferences = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
+        mSharedPreferences = getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
         mEditor = mSharedPreferences.edit();
 
-        String editText = mSharedPreferences.getString(KEY_EDITTEXT, "");
-        mEditText.setText(editText);
+        for (int i = 0; i < mHoles.length; i++) {
+            int strokes = mSharedPreferences.getInt(KEY_STOKE_COUNT + i, 0);
+            mHoles[i] = new Hole("Hole " + (i + 1) + " :", strokes);
+
+        }
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+        mScoreCardAdapter = new ScoreCardAdapter(mHoles);
+        mRecyclerView.setAdapter(mScoreCardAdapter);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        mRecyclerView.setHasFixedSize(true);
+
 
     }
+
+    /**
+     * Clear the stroke count of all holes and resets the shared preferences.
+     */
+    private void clearStrokeCounts() {
+
+        for (Hole hole : mHoles) {
+
+            hole.setStrokeCount(0);
+
+        }
+
+        mEditor.clear().apply();
+        mScoreCardAdapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,25 +90,24 @@ public class Main2Activity extends AppCompatActivity {
 
 
         switch (item.getItemId()) {
-            case R.id.resetPreferences:
-               resetSharedPreferences();
+            case R.id.action_clear_strokes:
+                clearStrokeCounts();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void resetSharedPreferences() {
-        mEditor.clear().apply();
-        mEditText.setText(mSharedPreferences.getString(KEY_EDITTEXT, ""));
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
 
-        mEditor.putString(KEY_EDITTEXT, mEditText.getText().toString());
-        mEditor.apply();
+        for (int i = 0; i < mHoles.length; i++) {
 
+            mEditor.putInt(KEY_STOKE_COUNT + i, mHoles[i].getStrokeCount());
+
+        }
+
+        mEditor.apply();
     }
 }
