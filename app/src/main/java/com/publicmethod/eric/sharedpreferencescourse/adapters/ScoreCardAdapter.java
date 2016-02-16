@@ -77,6 +77,7 @@ public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.Scor
 
             int updatedStrokeCount = mHoles[getAdapterPosition()].getStrokeCount();
 
+//            TODO: Change this to a switch case.
             if (v.getId() == mButtonMinus.getId()) {
 
                 updatedStrokeCount--;
